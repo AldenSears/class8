@@ -1,0 +1,53 @@
+<!-- to run this shiny demo of the discrete uniform distribution -->
+<!-- enter the following command into R's console:		 -->
+<!-- library(rmarkdown) ; run("uniform_disc_shiny.Rmd") 	 -->
+---
+author: Gideon Bradburd
+
+Shiny demo of the discrete Uniform Distribution
+---
+
+```{r, echo=TRUE}
+library(shiny)
+  # input and output definitions
+  # this is where you define the parameters of the distribution
+  # (the uniform distribution has 2 parameters, `a' and `b',
+  #		plus I have to define the number of replicates)
+inputPanel(
+ # Input: lower bound
+ sliderInput("a", "lower bound (a):",
+             min = 0, max = 100,
+             value = 0,step=1),
+ ## Input: upper bound
+ sliderInput("b", "upper bound (b):",
+             min = 0, max = 200,
+             value = 100),
+ ## Input: number of replicates
+ sliderInput("n.reps", "number of replicates (trials):",
+             min = 1, max = 1e4,
+             value = 1e4, step = 1)
+)
+
+observe({
+	if(is.null(input$b)){
+		return()
+	}
+	updateSliderInput(session,"a",value=min(input$b,input$a),min=0,max=input$b-1)
+})
+
+# this function determines how the output 
+# of the sliders is plotted
+renderPlot({
+  	# simulate data from the appropriately parameterized distribution
+    x <- sample(x=input$a:input$b,size=input$n.reps,replace=TRUE)
+	# dynamically define a plot title that gives summaries of the data
+	plot.title <- sprintf("Histogram of discrete Uniform draws\nmean = %s ; (a+b)/2 = %s",
+							round(mean(x),1),
+							0.5*(input$a+input$b))
+  	# visualize simulated data as a histogram
+    hist(x, col=adjustcolor("darkblue",0.7), border = "white",
+         xlab = "Values",
+         main = plot.title,
+         breaks=min(length(x),30))
+})
+```
