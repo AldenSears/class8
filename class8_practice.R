@@ -1,15 +1,21 @@
 # EBIO338/358: Analysis and Visualization of Biological Data
 # Class 8: Populations, samples, and distributions
 
+# Briefly explore the uniform distribution using a shiny app
+# What are the differences among these distributions?
+# A new window will pop up - just close out of it when you're done
+library(rmarkdown)
+run("uniform_cont_shiny.Rmd") # A continuous distribution
+run("uniform_disc_shiny.Rmd") # A discrete distribution
+
 
 # Explore the binomial distribution using a shiny app
-library(rmarkdown) 
+# What type of data would you be collecting if you got these sort of data?
 run("binomial_shiny.Rmd")
-# A new window will pop up - just close out of it when you're done
+# What do you notice about the shape of the histogram of number of successes?
 
 
-# Explore the uniform distribution using a shiny app
-run("uniform_cont_shiny.Rmd")
+
 
 # Check out a bunch of other distributions
 
